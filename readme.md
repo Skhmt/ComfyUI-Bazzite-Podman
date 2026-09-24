@@ -1,12 +1,12 @@
-# comfyui on bazzite-nvidia and podman
+# comfyui on bazzite-nvidia with podman
 
 ## install
 
-Install podman-compose: `pip install podman-compose` 
+install podman-compose: `pip install podman-compose` 
 
-Build the image: `podman-compose build`
+build the image: `podman-compose build`
 
-Building the image can take a few minutes.
+building the image can take a few minutes.
 
 ## run
 

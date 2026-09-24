@@ -7,7 +7,7 @@ services:
       - 8188:8188 # left is the port you host machine uses; the right side shouldn't change
     devices:
       - nvidia.com/gpu=all # replace nvidia with amd or intel, it *might* work
-    # un-comment the "command:" line if you want to change the default launch command, like to add --use-sage-attention or --use-flash-attention
+    # un-comment the "command:" line if you want to change the default launch command, like to add --use-sage-attention (if you modify the Dockerfile)
     # see - https://docs.comfy.org/development/comfyui-server/startup-flags
     # command: "python main.py --enable-manager --enable-cors-header --listen"
     volumes:

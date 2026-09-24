@@ -3,14 +3,15 @@ name: comfyui
 services:
   comfyui:
     build: .
-    security_opt:
-      - label=disable
     ports:
-      - 8188:8188
+      - 8188:8188 # left is the port you host machine uses; the right side shouldn't change
     devices:
       - nvidia.com/gpu=all # replace nvidia with amd or intel, it *might* work
+    # un-comment the "command:" line if you want to change the default launch command, like to add --use-sage-attention or --use-flash-attention
+    # see - https://docs.comfy.org/development/comfyui-server/startup-flags
+    # command: "python main.py --enable-manager --enable-cors-header --listen"
     volumes:
-      - input:/app/input
+      - input:/app/input # lets you persist inputs between startups but not between container changes
       - type: bind
         source: ./workflows
         target: /app/user/default/workflows
@@ -35,6 +36,7 @@ services:
         bind:
           create_host_path: true
           selinux: z
-
+    security_opt: # necessary for SELinux like Bazzite
+      - label=disable
 volumes:
   input:

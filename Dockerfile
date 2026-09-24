@@ -53,4 +53,6 @@ RUN pip install --no-cache-dir \
 # default ComfyUI port
 EXPOSE 8188
 
-CMD ["sh", "-c", "exec python /app/main.py --enable-manager --enable-cors-header --listen 0.0.0.0 --port 8188"]
+# explicitly listen to 0.0.0.0 and use port 8188, even though those are the defaults
+# --enable-manager is for ComfyUI-Manager and --enable-cors-header is necessary for it to work in a container
+CMD ["sh", "-c", "exec python /app/main.py --enable-manager --enable-cors-header --auto-launch --listen 0.0.0.0 --port 8188"]

@@ -27,10 +27,10 @@ WORKDIR /app
 RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
 
 # AMD
-# RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
+# RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
 
 # Intel
-# RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/xpu
+# RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/xpu
 
 # install ComfyUI dependencies
 RUN pip install --no-cache-dir -r requirements.txt

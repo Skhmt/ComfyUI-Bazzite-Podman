@@ -1,0 +1,42 @@
+name: comfyui
+
+services:
+  comfyui:
+    # https://github.com/reliq-hq/docker-comfyui/
+    image: reliqcontainers/comfyui:xpu-master
+    ports:
+      - 8188:8188 # left is the port you host machine uses; the right side shouldn't change
+    devices:
+      - /dev/dri:/dev/dri # intel
+    # see - https://docs.comfy.org/development/comfyui-server/startup-flags
+    command: "python main.py --enable-manager --enable-cors-header --listen"
+    volumes:
+      - input:/app/input # lets you persist inputs between startups but not between container changes
+      - type: bind
+        source: ./user
+        target: /app/user
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./nodes
+        target: /app/custom_nodes
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./models
+        target: /app/models
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./output
+        target: /app/output
+        bind:
+          create_host_path: true
+          selinux: z
+    security_opt: # necessary for SELinux like Bazzite
+      - label=disable
+volumes:
+  input:

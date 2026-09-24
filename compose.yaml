@@ -13,8 +13,8 @@ services:
     volumes:
       - input:/app/input # lets you persist inputs between startups but not between container changes
       - type: bind
-        source: ./workflows
-        target: /app/user/default/workflows
+        source: ./user
+        target: /app/user/
         bind:
           create_host_path: true
           selinux: z

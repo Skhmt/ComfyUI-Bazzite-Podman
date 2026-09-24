@@ -30,13 +30,19 @@ These folders will be automatically created and will persist even if the contain
 
 `./output` maps to `ComfyUI/output/`
 
-`./workflows` maps to `ComfyUI/user/default/workflows`
+`./user` maps to `ComfyUI/user/` - workflows are in `user/default/workflows`
 
 These can be remapped in the `compose.yaml` file - you can change your output directory to a network drive, for example.
 
-## Intel and AMD gpu users
+## AMD
 
-I don't have these to test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get those working.
+I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working?
+
+## Intel
+
+This pulls a prebuilt image from [reliq-hq](https://github.com/reliq-hq/docker-comfyui/).
+
+`podman-compose --file intel.yaml up`
 
 ## To do
 

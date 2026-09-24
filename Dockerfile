@@ -29,9 +29,6 @@ RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://
 # AMD
 # RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
 
-# Intel
-# RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/xpu
-
 # install ComfyUI dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 

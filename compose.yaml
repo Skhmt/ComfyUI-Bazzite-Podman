@@ -1,0 +1,42 @@
+# https://github.com/chadwellington/ComfyUI-Podman
+
+name: comfyui
+
+services:
+  comfyui:
+    build: .
+    security_opt:
+      - label=disable
+    ports:
+      - 8188:8188
+    devices:
+      - nvidia.com/gpu=all
+    volumes:
+      - input:/app/input
+      - type: bind
+        source: ./workflows
+        target: /app/user/default/workflows
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./nodes
+        target: /app/custom_nodes
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./models
+        target: /app/models
+        bind:
+          create_host_path: true
+          selinux: z
+      - type: bind
+        source: ./output
+        target: /app/output
+        bind:
+          create_host_path: true
+          selinux: z
+
+volumes:
+  input:

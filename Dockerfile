@@ -23,7 +23,7 @@ RUN git clone https://github.com/Comfy-Org/ComfyUI.git /app
 
 WORKDIR /app
 
-# install PyTorch with explicit CUDA support first
+# Nvidia
 RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
 
 # AMD

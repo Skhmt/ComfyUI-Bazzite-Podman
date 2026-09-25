@@ -11,17 +11,15 @@ This doesn't require root, it isolates ComfyUI into a container as much as possi
 
 ## Install
 
-Put the `Dockerfile` and `compose.yaml` files from this repository into a folder somewhere. Maybe this readme too?
+Put the `compose.yaml` file from this repository into a folder where you want your models/nodes/output/user folders to be.
 
-Install podman-compose: `pip install podman-compose` 
-
-Build the image: `podman-compose build`
-
-Building the image can take a few minutes, but only ever needs to be done once.
+Install podman-compose: `pip install podman-compose` so you can run the file.
 
 ## Run
 
 `podman-compose up`
+
+Running this the first time will take a few minutes as it downloads the image.
 
 ## User data
 
@@ -46,7 +44,3 @@ This pulls a prebuilt image from [reliq-hq](https://github.com/reliq-hq/docker-c
 ## AMD
 
 I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working?
-
-## To-do
-
-Pre-built image

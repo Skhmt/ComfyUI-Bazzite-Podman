@@ -29,10 +29,10 @@ RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://
 # AMD
 # RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
 
-# Install Triton and SageAttention
+# triton is a pre-req of sageattention
 RUN pip install --no-cache-dir triton
 
-# We use --no-build-isolation so it uses the 'torch' we just installed above
+# --no-build-isolation so it uses the 'torch' we just installed above
 RUN pip install --no-cache-dir --no-build-isolation sageattention
 
 # pre-install common custom node dependencies (fixes warnings & boot delays)

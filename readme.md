@@ -43,4 +43,8 @@ This pulls a prebuilt image from [reliq-hq](https://github.com/reliq-hq/docker-c
 
 ## AMD
 
-I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working?
+I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working.
+
+## Building
+
+You can build the image if you want by downloading the `Dockerfile` and running `podman-compose build`. 

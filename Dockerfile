@@ -29,11 +29,11 @@ RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://
 # AMD
 # RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
 
-# install ComfyUI dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Triton and SageAttention
+RUN pip install --no-cache-dir triton
 
-# install ComfyUI-Manager
-RUN pip install --no-cache-dir -r manager_requirements.txt
+# We use --no-build-isolation so it uses the 'torch' we just installed above
+RUN pip install --no-cache-dir --no-build-isolation sageattention
 
 # pre-install common custom node dependencies (fixes warnings & boot delays)
 # - matplotlib: required by Comfyroll & image custom nodes
@@ -43,6 +43,12 @@ RUN pip install --no-cache-dir \
     matplotlib \
     matrix-nio \
     PyOpenGL
+
+# install ComfyUI dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# install ComfyUI-Manager
+RUN pip install --no-cache-dir -r manager_requirements.txt
 
 # clean up pip cache
 # RUN pip cache purge

@@ -2,7 +2,7 @@ name: comfyui
 
 services:
   comfyui:
-    build: .
+    image: ghcr.io/skhmt/comfyui-bazzite-podman:main
     ports:
       - 8188:8188 # left is the port you host machine uses; the right side shouldn't change
     devices:

@@ -14,11 +14,11 @@ Terminal=false
 Categories=Graphics;"
 
 # Define container images for each hardware target
-IMAGE_INTEL="ghcr.io/reliq-hq/comfyui:xpu-master"
+IMAGE_INTEL="docker.io/yanwk/comfyui-boot:xpu"
+IMAGE_AMD="docker.io/yanwk/comfyui-boot:rocm7"
 IMAGE_NVIDIA="ghcr.io/skhmt/comfyui-bazzite-podman:main"
-# IMAGE_AMD="docker.io/rocm/dev-ubuntu-22.04:latest"
 
-SELECTION=$(gum choose "Intel" "Nvidia" "CANCEL" --header "Select your GPU architecture:") || {
+SELECTION=$(gum choose "Intel" "Nvidia" "AMD" "CANCEL" --header "Select your GPU architecture:") || {
     echo "Operation cancelled by user."
     exit 0
 }

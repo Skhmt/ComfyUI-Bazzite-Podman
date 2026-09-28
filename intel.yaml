@@ -2,12 +2,11 @@ name: comfyui
 
 services:
   comfyui:
-    # https://github.com/reliq-hq/docker-comfyui/
-    image: reliqcontainers/comfyui:xpu-master
+    image: yanwk/comfyui-boot:xpu
     ports:
       - 8188:8188 # left is the port you host machine uses; the right side shouldn't change
     devices:
-      - /dev/dri:/dev/dri # intel
+      - /dev/dri:/dev/dri
     # see - https://docs.comfy.org/development/comfyui-server/startup-flags
     command: "python main.py --enable-manager --enable-cors-header --listen"
     volumes:

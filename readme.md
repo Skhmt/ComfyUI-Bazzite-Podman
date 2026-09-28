@@ -1,6 +1,6 @@
 # Containerized ComfyUI on Bazzite
 
-[ComfyUI](https://github.com/Comfy-Org/ComfyUI) + [ComfyUI-Manager](https://github.com/comfy-org/ComfyUI-Manager) + [SageAttention](https://github.com/thu-ml/SageAttention) in a ~8.8GB Podman container and a GUI.
+[ComfyUI](https://github.com/Comfy-Org/ComfyUI) + [ComfyUI-Manager](https://github.com/comfy-org/ComfyUI-Manager) + [SageAttention](https://github.com/thu-ml/SageAttention) (for nvidia)
 
 Assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) on an x86-64 processor with an Nvidia or Intel GPU (AMD coming eventually).
 
@@ -22,6 +22,8 @@ For intel, this uses whatever [reliq-hq](https://github.com/reliq-hq/docker-comf
 Clone this repo into the folder you want to have your user data in.
 
 Run `sh install.sh`
+
+If you're using a 40 or 50 series nvidia gpu, open `compose.yaml` and un-comment the `command:` line.
 
 ## Run like an application
 

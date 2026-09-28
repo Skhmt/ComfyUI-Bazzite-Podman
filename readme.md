@@ -1,25 +1,31 @@
-# Containerized ComfyUI on Bazzite-nvidia
+# Containerized ComfyUI on Bazzite
 
-[ComfyUI](https://github.com/Comfy-Org/ComfyUI) + [ComfyUI-Manager](https://github.com/comfy-org/ComfyUI-Manager) + [SageAttention](https://github.com/thu-ml/SageAttention) in a ~8.8GB Podman container.
+[ComfyUI](https://github.com/Comfy-Org/ComfyUI) + [ComfyUI-Manager](https://github.com/comfy-org/ComfyUI-Manager) + [SageAttention](https://github.com/thu-ml/SageAttention) in a ~8.8GB Podman container and a GUI.
 
-Assumes the user is running [Bazzite-nvidia](https://bazzite.gg/) (`bazzite-dx-nvidia` is fine too) on an x86-64 processor.
+Assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) on an x86-64 processor with an Nvidia or Intel GPU (AMD coming eventually).
 
-This doesn't require root, it isolates ComfyUI into a container as much as possible, and takes advantage of pre-installed software and drivers on Bazzite.
+This doesn't require root, it isolates ComfyUI into a container as much as possible, and takes advantage of pre-installed software and drivers on Bazzite, like:
 
-- **python**: 3.13.15
-- **pytorch**: 2.14.0+cu130
+- Firefox flatpak
+- Podman
+- Gum (for the installer)
+- Zenity (for the launcher)
+- GPU drivers
+- KDE or GNOME
+
+For nvidia, this uses python 3.13.15 and pytorch 2.14.0+cu130.
+
+For intel, this uses whatever [reliq-hq](https://github.com/reliq-hq/docker-comfyui/tree/master) uses, generally the latest.
 
 ## Install
 
-Put the `compose.yaml` file from this repository into a folder where you want your models/nodes/output/user folders to be.
+Clone this repo into the folder you want to have your user data in.
 
-Install podman-compose: `pip install podman-compose` so you can run the file.
+Run `sh install.sh`
 
-## Run
+## Run like an application
 
-`podman-compose up`
-
-Running this the first time will take a few minutes as it downloads the image.
+Run the ComfyUI application like any installed application.
 
 ## User data
 
@@ -35,12 +41,6 @@ These folders will be automatically created and will persist even if the contain
 
 These can be remapped in the `compose.yaml` file - you can change your output directory to a network drive, for example.
 
-## Intel
-
-This pulls a prebuilt image from [reliq-hq](https://github.com/reliq-hq/docker-comfyui/).
-
-`podman-compose --file intel.yaml up`
-
 ## AMD
 
 I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working.
@@ -48,3 +48,7 @@ I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.ya
 ## Building
 
 You can build the image if you want by downloading the `Dockerfile` and running `podman-compose build`. 
+
+## Manual running as a server with full console logs
+
+After installing (which is only really necessary for the `compose.yaml` files and `.desktop` shortcut), you can just go to the directory and run `podman-compose up`

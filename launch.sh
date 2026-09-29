@@ -39,21 +39,19 @@ fi
 
 echo "Container is up"
 
-FLAGS="--user-data-dir=$PROFILE_DIR"
-
 echo "Launching browser..."
 
-# 1. Create profile and chrome directory
+# Create profile and chrome directory if it doesn't already exist
 mkdir -p "$FIREFOX_PROFILE_DIR/chrome"
 
-# 2. Enable userChrome.css support via user.js
+# Enable userChrome.css support via user.js
 cat <<EOF > "$FIREFOX_PROFILE_DIR/user.js"
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.tabs.inTitlebar", 0);
 EOF
 
-# 3. Add CSS to hide the tab bar, navigation bar, and sidebar header
+# Add CSS to hide the tab bar, navigation bar, and sidebar header
 cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 /* Hide the Tab Bar */
 #TabsToolbar {
@@ -66,6 +64,7 @@ cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 }
 EOF
 
+# Start firefox, assuming it's installed via flatpak because it is in baseline Bazzite
 flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --class="comfyui-app" --no-remote &> /dev/null &
 echo "Firefox flatpak launched"
 

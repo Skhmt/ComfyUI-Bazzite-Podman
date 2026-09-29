@@ -66,7 +66,7 @@ cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 }
 EOF
 
-flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --no-remote > /dev/null 2>&1 &
+flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --class="comfyui-app" --no-remote > /dev/null 2>&1 &
 echo "Firefox flatpak launched"
 
 echo "Waiting for browser window to register..."

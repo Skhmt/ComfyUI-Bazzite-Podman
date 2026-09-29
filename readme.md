@@ -45,7 +45,7 @@ These can be remapped in the `compose.yaml` file - you can change your output di
 
 ## AMD
 
-I don't have an AMD GPU test on, but if you go into `Dockerfile` and `compose.yaml`, I left comments in how you can supposedly get it working.
+I don't have an AMD GPU test on, but it *should* work.
 
 ## Building
 
@@ -53,4 +53,4 @@ You can build the image if you want by downloading the `Dockerfile` and running 
 
 ## Manual running as a server with full console logs
 
-After installing (which is only really necessary for the `compose.yaml` files and `.desktop` shortcut), you can just go to the directory and run `podman-compose up`
+You can just grab the compose file for your particular GPU vendor, put it in a folder you want your data to be in, and run `podman-compose -f [amd/intel/nvidia].yaml up`

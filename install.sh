@@ -1,4 +1,5 @@
-# Install script for making ComfyUI look like a website...
+#!/usr/bin/env bash
+
 # This assumes pip, podman, and whiptail are installed, which they should be.
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)

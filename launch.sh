@@ -10,7 +10,7 @@ FIREFOX_PROFILE_DIR="$HOME/.var/app/org.mozilla.firefox/cache/comfyui-profile"
 cleanup() {
     echo "Stopping ComfyUI container..."
     podman-compose down
-    rm -rf "$PROFILE_DIR"
+    # rm -rf "$FIREFOX_PROFILE_DIR" # don't clean this up to save preferences
 }
 trap cleanup EXIT INT TERM
 

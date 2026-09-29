@@ -2,9 +2,7 @@
 
 [ComfyUI](https://github.com/Comfy-Org/ComfyUI) + [ComfyUI-Manager](https://github.com/comfy-org/ComfyUI-Manager) + [SageAttention](https://github.com/thu-ml/SageAttention) (for nvidia)
 
-Assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) on an x86-64 processor with an Nvidia or Intel GPU (AMD coming eventually).
-
-This doesn't require root, it isolates ComfyUI into a container as much as possible, and takes advantage of pre-installed software and drivers on Bazzite, like:
+This simplifies the install, makes it look like a standalone application, isolates ComfyUI into a container as much as possible, and takes advantage of pre-installed software and drivers on Bazzite, like:
 
 - Firefox flatpak
 - Podman
@@ -13,9 +11,7 @@ This doesn't require root, it isolates ComfyUI into a container as much as possi
 - GPU drivers
 - KDE or GNOME
 
-For nvidia, this uses python 3.13.15 and pytorch 2.14.0+cu130.
-
-For intel, this uses whatever [reliq-hq](https://github.com/reliq-hq/docker-comfyui/tree/master) uses, generally the latest.
+This assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) on an x86-64 processor and has a GPU.
 
 ## Install
 
@@ -49,8 +45,9 @@ I don't have an AMD GPU test on, but it *should* work.
 
 ## Building
 
-You can build the image if you want by downloading the `Dockerfile` and running `podman-compose build`. 
+You can build the nvidia image if you want by downloading the `Dockerfile` and running `podman-compose build`. 
 
 ## Manual running as a server with full console logs
 
-You can just grab the compose file for your particular GPU vendor, put it in a folder you want your data to be in, and run `podman-compose -f [amd/intel/nvidia].yaml up`
+If you want to run it normally as a command line application and use the UI with your browser of choice, you can just grab 
+the compose file for your particular GPU vendor, put it in a folder you want your data to be in, and run `podman-compose -f [amd/intel/nvidia].yaml up`.

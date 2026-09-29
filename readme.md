@@ -17,7 +17,7 @@ This assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is
 
 Clone this repo into the folder you want to have your user data in.
 
-Run `sh install.sh` or make it executable via right-click things.
+Run `chmod +x install.sh && ./install.sh` or make it executable via right-click things and double-click it.
 
 If you're using a 40 or 50 series nvidia gpu, open `compose.yaml` and un-comment the `command:` line to use SageAttention.
 
@@ -43,9 +43,11 @@ These can be remapped in the `compose.yaml` file - you can change your output di
 
 I don't have an AMD GPU test on, but it *should* work.
 
-## Building
+## Building nvidia image
 
-You can build the nvidia image if you want by downloading the `Dockerfile` and running `podman-compose build`. 
+Instead of automatically downloading the pre-built nvidia image from github, you can build it by downloading the `Dockerfile` and running `podman-compose build`. 
+
+This is really not necessary unless you want to make changes.
 
 ## Manual running as a server with full console logs
 

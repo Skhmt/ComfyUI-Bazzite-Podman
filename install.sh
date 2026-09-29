@@ -11,6 +11,7 @@ Comment=Run ComfyUI
 Exec=sh $SCRIPT_DIR/launch.sh
 Icon=$SCRIPT_DIR/comfyui.png
 Terminal=false
+StartupWMClass=comfyui-app
 Categories=Graphics;"
 
 # Define container images for each hardware target

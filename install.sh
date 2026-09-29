@@ -81,7 +81,7 @@ for dir in "${TARGET_DIRS[@]}"; do
     fi
 done
 
-# Refresh desktop database so GNOME menu picks it up immediately
+# Refresh desktop database
 if command -v update-desktop-database &> /dev/null; then
     update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 fi

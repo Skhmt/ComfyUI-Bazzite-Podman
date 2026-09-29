@@ -27,7 +27,7 @@ echo "Running podman-compose..."
            --text="Starting services, please wait..." \
            --pulsate \
            --auto-close \
-           --width=350 2>/dev/null
+           --width=350 2> /dev/null
 
 # Check if zenity was canceled or closed by the user
 ZENITY_STATUS=${PIPESTATUS[1]}

@@ -17,9 +17,9 @@ This assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is
 
 Clone this repo into the folder you want to have your user data in.
 
-Run `sh install.sh`
+Run `sh install.sh` or make it executable via right-click things.
 
-If you're using a 40 or 50 series nvidia gpu, open `compose.yaml` and un-comment the `command:` line.
+If you're using a 40 or 50 series nvidia gpu, open `compose.yaml` and un-comment the `command:` line to use SageAttention.
 
 ## Run like an application
 

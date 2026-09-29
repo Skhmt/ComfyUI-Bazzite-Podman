@@ -17,7 +17,7 @@ trap cleanup EXIT INT TERM
 echo "Running podman-compose..."
 # 1. Native GUI progress dialog while starting container
 (
-    podman-compose up -d > /dev/null 2>&1
+    podman-compose up -d &> /dev/null
 
     until curl -s --head --fail "$APP_URL" > /dev/null; do
         sleep 1
@@ -66,7 +66,7 @@ cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 }
 EOF
 
-flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --class="comfyui-app" --no-remote > /dev/null 2>&1 &
+flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --class="comfyui-app" --no-remote &> /dev/null &
 echo "Firefox flatpak launched"
 
 echo "Waiting for browser window to register..."

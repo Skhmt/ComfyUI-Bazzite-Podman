@@ -8,7 +8,7 @@ DESKTOP_CONTENT="[Desktop Entry]
 Type=Application
 Name=ComfyUI
 Comment=Run ComfyUI
-Exec=sh $SCRIPT_DIR/launch.sh
+Exec=$SCRIPT_DIR/launch.sh
 Icon=$SCRIPT_DIR/comfyui.png
 Terminal=false
 StartupWMClass=comfyui-app
@@ -18,6 +18,9 @@ Categories=Graphics;"
 IMAGE_INTEL="docker.io/yanwk/comfyui-boot:xpu"
 IMAGE_AMD="docker.io/yanwk/comfyui-boot:rocm7"
 IMAGE_NVIDIA="ghcr.io/skhmt/comfyui-bazzite-podman:main"
+
+# Make launch.sh executable
+chmod +x $SCRIPT_DIR/launch.sh
 
 SELECTION=$(gum choose "Intel" "Nvidia" "AMD" "CANCEL" --header "Select your GPU architecture:") || {
     echo "Operation cancelled by user."

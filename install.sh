@@ -77,13 +77,13 @@ for dir in "${TARGET_DIRS[@]}"; do
 
     # Enable launch trust if on Desktop (GNOME extension support)
     if [[ "$dir" == *"Desktop"* ]] && command -v gio &> /dev/null; then
-        gio set "$FILE_PATH" metadata::trusted true 2>/dev/null || true
+        gio set "$FILE_PATH" metadata::trusted true 2> /dev/null || true
     fi
 done
 
 # Refresh desktop database
 if command -v update-desktop-database &> /dev/null; then
-    update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
+    update-desktop-database "$HOME/.local/share/applications" 2> /dev/null || true
 fi
 
 echo "Finished."

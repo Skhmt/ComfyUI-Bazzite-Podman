@@ -6,11 +6,11 @@ cd "$SCRIPT_DIR"
 
 APP_URL="http://localhost:8188"
 FIREFOX_PROFILE_DIR="$HOME/.var/app/org.mozilla.firefox/cache/comfyui-profile"
+PROFILE_DIR="$HOME/.var/app/org.chromium.Chromium/data/comfyui-profile"
 
 cleanup() {
     echo "Stopping ComfyUI container..."
     podman-compose down
-    # rm -rf "$FIREFOX_PROFILE_DIR" # don't clean this up to save preferences
 }
 trap cleanup EXIT INT TERM
 
@@ -41,18 +41,54 @@ echo "Container is up"
 
 echo "Launching browser..."
 
-# Create profile and chrome directory if it doesn't already exist
-mkdir -p "$FIREFOX_PROFILE_DIR/chrome"
+if flatpak info org.chromium.Chromium &> /dev/null; then
+    mkdir -p "$PROFILE_DIR"
+    flatpak run \
+        --env=GDK_BACKEND=x11 \
+        org.chromium.Chromium \
+        --ozone-platform=x11 \
+        --user-data-dir="$PROFILE_DIR" \
+        --class="ComfyUI" \
+        --app="$APP_URL" &> /dev/null &
+    echo "Chromium flatpak launched"
 
-# Enable userChrome.css support via user.js
-cat <<'EOF' > "$FIREFOX_PROFILE_DIR/user.js"
+elif flatpak info com.google.Chrome &> /dev/null; then
+    PROFILE_DIR="$HOME/.var/app/com.google.Chrome/data/comfyui-profile"
+    mkdir -p "$PROFILE_DIR"
+    flatpak run \
+        --env=GDK_BACKEND=x11 \
+        com.google.Chrome \
+        --ozone-platform=x11 \
+        --user-data-dir="$PROFILE_DIR" \
+        --class="ComfyUI" \
+        --app="$APP_URL" &> /dev/null &
+    echo "Chrome flatpak launched"
+
+elif flatpak info com.microsoft.Edge &> /dev/null; then
+    PROFILE_DIR="$HOME/.var/app/com.microsoft.Edge/data/comfyui-profile"
+    mkdir -p "$PROFILE_DIR"
+    flatpak run \
+        --env=GDK_BACKEND=x11 \
+        com.microsoft.Edge \
+        --ozone-platform=x11 \
+        --user-data-dir="$PROFILE_DIR" \
+        --class="ComfyUI" \
+        --app="$APP_URL" &> /dev/null &
+    echo "Edge flatpak launched"
+
+else
+    # Create profile and chrome directory if it doesn't already exist
+    mkdir -p "$FIREFOX_PROFILE_DIR/chrome"
+
+    # Enable userChrome.css support via user.js
+    cat <<'EOF' > "$FIREFOX_PROFILE_DIR/user.js"
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.tabs.inTitlebar", 0);
 EOF
 
-# Add CSS to hide the tab bar, navigation bar, and sidebar header
-cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
+    # Add CSS to hide the tab bar, navigation bar, and sidebar header
+    cat <<'EOF' > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 /* Hide the Tab Bar */
 #TabsToolbar {
     visibility: collapse !important;
@@ -64,21 +100,29 @@ cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 }
 EOF
 
-# Start firefox, assuming it's installed via flatpak because it is in baseline Bazzite --class="ComfyUI"
-flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --name="ComfyUI" --no-remote &> /dev/null &
-echo "Firefox flatpak launched"
+    # Start firefox, assuming it's installed via flatpak because it is in baseline Bazzite --class="ComfyUI"
+    flatpak run org.mozilla.firefox \
+        --profile "$FIREFOX_PROFILE_DIR" \
+        --new-window "$APP_URL" \
+        --name="ComfyUI" \
+        --class="ComfyUI" \
+        --no-remote &> /dev/null &
+
+    echo "Firefox flatpak launched"
+fi
 
 echo "Waiting for browser window to register..."
 
 # Wait for the browser process/window running the app to spawn
-until pgrep -f "$APP_URL" > /dev/null; do
+# PROFILE_DIR is for chromium browsers, APP_URL is for firefox
+until pgrep -f "$PROFILE_DIR" > /dev/null || pgrep -f "$APP_URL" > /dev/null; do
     sleep 0.5
 done
 
 echo "App window active. Monitoring process..."
 
-# Hold script execution while any browser process is referencing localhost:8188
-while pgrep -f "$APP_URL" > /dev/null; do
+# Monitor for either the Chromium profile path OR Firefox profile path
+while pgrep -f "$PROFILE_DIR" > /dev/null || pgrep -f "$APP_URL" > /dev/null; do
     sleep 2
 done
 

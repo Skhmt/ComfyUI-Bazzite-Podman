@@ -45,7 +45,7 @@ echo "Launching browser..."
 mkdir -p "$FIREFOX_PROFILE_DIR/chrome"
 
 # Enable userChrome.css support via user.js
-cat <<EOF > "$FIREFOX_PROFILE_DIR/user.js"
+cat <<'EOF' > "$FIREFOX_PROFILE_DIR/user.js"
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.tabs.inTitlebar", 0);
@@ -64,8 +64,8 @@ cat <<EOF > "$FIREFOX_PROFILE_DIR/chrome/userChrome.css"
 }
 EOF
 
-# Start firefox, assuming it's installed via flatpak because it is in baseline Bazzite
-flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --class="comfyui-app" --no-remote &> /dev/null &
+# Start firefox, assuming it's installed via flatpak because it is in baseline Bazzite --class="ComfyUI"
+flatpak run org.mozilla.firefox --profile "$FIREFOX_PROFILE_DIR" --new-window "$APP_URL" --name="ComfyUI" --no-remote &> /dev/null &
 echo "Firefox flatpak launched"
 
 echo "Waiting for browser window to register..."

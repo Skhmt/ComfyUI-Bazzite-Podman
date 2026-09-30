@@ -41,54 +41,39 @@ echo "Container is up"
 
 echo "Launching browser..."
 
-if flatpak info org.chromium.Chromium &> /dev/null; then
-    mkdir -p "$PROFILE_DIR"
-    flatpak run \
-        --env=GDK_BACKEND=x11 \
-        org.chromium.Chromium \
-        --ozone-platform=x11 \
-        --user-data-dir="$PROFILE_DIR" \
-        --class="ComfyUI" \
-        --app="$APP_URL" &> /dev/null &
-    echo "Chromium flatpak launched"
+# List chromium browser flatpaks in order of preference
+browsers=(
+    "org.chromium.Chromium:Chromium"
+    "com.brave.Browser:Brave"
+    "com.vivaldi.Vivaldi:Vivaldi"
+    "com.google.Chrome:Chrome"
+    "com.microsoft.Edge:Edge"
+)
 
-elif flatpak info com.brave.Browser &> /dev/null; then
-    PROFILE_DIR="$HOME/.var/app/com.brave.Browser/data/comfyui-profile"
-    mkdir -p "$PROFILE_DIR"
-    flatpak run \
-        --env=GDK_BACKEND=x11 \
-        com.brave.Browser \
-        --ozone-platform=x11 \
-        --user-data-dir="$PROFILE_DIR" \
-        --class="ComfyUI" \
-        --app="$APP_URL" &> /dev/null &
-    echo "Brave flatpak launched"
+FOUND=false
 
-elif flatpak info com.google.Chrome &> /dev/null; then
-    PROFILE_DIR="$HOME/.var/app/com.google.Chrome/data/comfyui-profile"
-    mkdir -p "$PROFILE_DIR"
-    flatpak run \
-        --env=GDK_BACKEND=x11 \
-        com.google.Chrome \
-        --ozone-platform=x11 \
-        --user-data-dir="$PROFILE_DIR" \
-        --class="ComfyUI" \
-        --app="$APP_URL" &> /dev/null &
-    echo "Chrome flatpak launched"
+for entry in "${browsers[@]}"; do
+    IFS=":" read -r app_id app_name <<< "$entry"
 
-elif flatpak info com.microsoft.Edge &> /dev/null; then
-    PROFILE_DIR="$HOME/.var/app/com.microsoft.Edge/data/comfyui-profile"
-    mkdir -p "$PROFILE_DIR"
-    flatpak run \
-        --env=GDK_BACKEND=x11 \
-        com.microsoft.Edge \
-        --ozone-platform=x11 \
-        --user-data-dir="$PROFILE_DIR" \
-        --class="ComfyUI" \
-        --app="$APP_URL" &> /dev/null &
-    echo "Edge flatpak launched"
+    if flatpak info "$app_id" &> /dev/null; then
+        PROFILE_DIR="$HOME/.var/app/$app_id/data/comfyui-profile"
+        mkdir -p "$PROFILE_DIR"
 
-else
+        flatpak run \
+            --env=GDK_BACKEND=x11 \
+            "$app_id" \
+            --ozone-platform=x11 \
+            --user-data-dir="$PROFILE_DIR" \
+            --class="ComfyUI" \
+            --app="$APP_URL" &> /dev/null &
+
+        echo "$app_name flatpak launched"
+        FOUND=true
+        break
+    fi
+done
+
+if [[ "$FOUND" == false ]]; then # Firefox fallback
     # Create profile and chrome directory if it doesn't already exist
     mkdir -p "$FIREFOX_PROFILE_DIR/chrome"
 

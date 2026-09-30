@@ -52,6 +52,18 @@ if flatpak info org.chromium.Chromium &> /dev/null; then
         --app="$APP_URL" &> /dev/null &
     echo "Chromium flatpak launched"
 
+elif flatpak info com.brave.Browser &> /dev/null; then
+    PROFILE_DIR="$HOME/.var/app/com.brave.Browser/data/comfyui-profile"
+    mkdir -p "$PROFILE_DIR"
+    flatpak run \
+        --env=GDK_BACKEND=x11 \
+        com.brave.Browser \
+        --ozone-platform=x11 \
+        --user-data-dir="$PROFILE_DIR" \
+        --class="ComfyUI" \
+        --app="$APP_URL" &> /dev/null &
+    echo "Brave flatpak launched"
+
 elif flatpak info com.google.Chrome &> /dev/null; then
     PROFILE_DIR="$HOME/.var/app/com.google.Chrome/data/comfyui-profile"
     mkdir -p "$PROFILE_DIR"

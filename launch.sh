@@ -17,7 +17,7 @@ trap cleanup EXIT INT TERM
 echo "Running podman-compose..."
 # 1. Native GUI progress dialog while starting container
 (
-    podman-compose up -d &> $SCRIPT_DIR/comfy-container.log
+    podman-compose up -d &> /dev/null
 
     until curl -s --head --fail "$APP_URL" > /dev/null; do
         sleep 1

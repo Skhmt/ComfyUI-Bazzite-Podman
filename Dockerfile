@@ -42,7 +42,8 @@ RUN pip install --no-cache-dir --no-build-isolation sageattention
 RUN pip install --no-cache-dir \
     matplotlib \
     matrix-nio \
-    PyOpenGL
+    PyOpenGL \
+    gguf
 
 # install ComfyUI dependencies
 RUN pip install --no-cache-dir -r requirements.txt

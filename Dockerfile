@@ -43,7 +43,7 @@ RUN pip install --no-cache-dir \
     matplotlib \
     matrix-nio \
     PyOpenGL \
-    gguf
+    gguf sentencepiece protobuf
 
 # install ComfyUI dependencies
 RUN pip install --no-cache-dir -r requirements.txt

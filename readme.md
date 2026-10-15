@@ -11,7 +11,7 @@ This simplifies the install, makes it look like a standalone application, isolat
 - GPU drivers
 - KDE or GNOME
 
-This assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) on an x86-64 processor and has a GPU.
+This assumes the user is running [Bazzite](https://bazzite.gg/) (`bazzite-dx` is fine too) and has a GPU.
 
 ## Install
 
@@ -45,7 +45,7 @@ I don't have an AMD GPU test on, but it *should* work.
 
 ## Building nvidia image
 
-Instead of automatically downloading the pre-built nvidia image from github, you can build it by downloading the `Dockerfile` and running `podman-compose build`. 
+Instead of automatically downloading the pre-built nvidia image from github, you can build it by downloading the `Dockerfile` and running `podman build -f Dockerfile -t ghcr.io/skhmt/comfyui-bazzite-podman:main`.
 
 This is really not necessary unless you want to make changes.
 
